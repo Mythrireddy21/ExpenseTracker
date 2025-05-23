@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Expense Tracker</title>
+  
+  <meta name="total-expense" content="{{ total_expense }}">
+  <meta name="budget-limit" content="{{ budget if budget else '' }}">
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<header>
+  <h1>Dashboard</h1>
+  <nav>
+    <ul class="nav-bar">
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('dashboard') }}" class="active">Dashboard</a></li>
+      <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+      <li><a href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+      <li><a href="{{ url_for('graphs') }}">Generate Graphs</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="centered-container">
+  <section class="dashboard-box">
+    <h2>Welcome, {{ username }}!</h2>
+    <p>Total Expenses: <strong>${{ "%.2f"|format(total_expense) }}</strong></p>
+
+    {% if budget %}
+      <p>Budget Limit: <strong>${{ "%.2f"|format(budget) }}</strong></p>
+      <p>Remaining Budget: 
+        <strong class="{{ 'budget-positive' if budget - total_expense >= 0 else 'budget-negative' }}">
+          ${{ "%.2f"|format((budget - total_expense) if budget - total_expense > 0 else 0) }}
+        </strong>
+      </p>
+
+      {% if budget_alert %}
+        <div class="budget-alert {{ budget_alert_class }}">
+          {{ budget_alert | safe }}
+        </div>
+      {% endif %}
+
+    {% else %}
+      <form action="{{ url_for('set_budget') }}" method="post" class="budget-form">
+        <label for="budget">Set Budget Limit ($):</label>
+        <input type="number" name="budget" step="0.01" min="0" required />
+        <button type="submit" class="btn btn-primary">Set Budget</button>
+      </form>
+    {% endif %}
+  </section>
+
+  <section class="dashboard-box">
+    <h3>Your Expenses</h3>
+
+    <form method="GET" action="{{ url_for('dashboard') }}" class="filter-form">
+  <div class="filter-fields">
+    <input type="date" name="start_date" placeholder="Start Date" value="{{ request.args.get('start_date', '') }}">
+    <input type="date" name="end_date" placeholder="End Date" value="{{ request.args.get('end_date', '') }}">
+    <input type="text" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+    <input type="number" name="min_amount" placeholder="Min Amount" step="0.01" value="{{ request.args.get('min_amount', '') }}">
+    <input type="number" name="max_amount" placeholder="Max Amount" step="0.01" value="{{ request.args.get('max_amount', '') }}">
+    <input type="text" name="keyword" placeholder="Search Description" value="{{ request.args.get('keyword', '') }}">
+  </div>
+
+  <div class="filter-buttons">
+    <button type="submit" class="btn btn-primary">Apply Filters</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-clear">Clear Filters</a>
+  </div>
+</form>
+
+
+
+    <!-- ✅ Optional: Show Active Filters -->
+    {% if request.args %}
+      <p><strong>Filters Applied:</strong></p>
+      <ul>
+        {% for key, value in request.args.items() %}
+          {% if value %}
+            <li>{{ key.replace("_", " ").title() }}: {{ value }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if expenses %}
+      <ul class="expense-list">
+        {% for e in expenses %}
+        <li>
+          <div class="expense-info">
+            <span class="expense-date"><strong>{{ e.date }}</strong></span> |
+            <span class="expense-category"><strong>{{ e.category }}</strong></span> |
+            <span class="expense-amount">${{ e.amount }}</span>
+          </div>
+          <div class="expense-actions">
+            <a href="{{ url_for('edit_expense', index=loop.index0) }}" class="btn-edit" title="Edit">🖉</a>
+            <form action="{{ url_for('delete_expense', index=loop.index0) }}" method="POST" style="display:inline;">
+              <button type="submit" class="btn-delete" title="Delete">🗑️</button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No expenses found.</p>
+    {% endif %}
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

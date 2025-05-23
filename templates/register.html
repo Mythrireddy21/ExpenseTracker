@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Register - Expense Tracker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div class="centered-container">
+  <h2>Create a New Account</h2>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash {{category}}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  <form action="{{ url_for('register_user') }}" method="post" class="form-box">
+    <label>Username</label>
+    <input type="text" name="username" required placeholder="Choose a username" autocomplete="off"/>
+    <label>Email</label>
+    <input type="email" name="email" required placeholder="Your email" autocomplete="off"/>
+    <label>Password</label>
+    <input type="password" name="password" required placeholder="Create password" />
+    <label>Confirm Password</label>
+    <input type="password" name="confirm_password" required placeholder="Confirm password" />
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  <p>Already have an account? <a href="{{ url_for('index') }}">Login here</a></p>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Generate Graphs - Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .btn-container {
+      display: flex;
+      gap: 15px;
+      margin: 30px auto 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 700px;
+    }
+    .chart-btn {
+      background-color: #a3c9f1; /* light blue */
+      border: none;
+      color: #333; /* dark text for contrast */
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 6px rgba(163, 201, 241, 0.6);
+      flex: 1 1 150px;
+      max-width: 200px;
+    }
+    .chart-btn:hover {
+      background-color: #7fb0ea; /* slightly darker light blue */
+      box-shadow: 0 4px 8px rgba(127, 176, 234, 0.7);
+    }
+    .chart-btn.active {
+      background-color: #76d7c4; /* light teal */
+      color: #1a1a1a; /* darker text */
+      box-shadow: 0 4px 10px rgba(118, 215, 196, 0.8);
+    }
+    #chart-display {
+      max-width: 700px;
+      width: 90vw;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      background: white;
+      padding: 20px;
+      margin: 0 auto 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+      overflow: hidden;
+    }
+    #chart-display img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <!-- Same header and nav as other pages -->
+  <header>
+    <h1>Generate Graphs</h1>
+    <nav>
+      <ul class="nav-bar">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+        <li><a href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+        <li><a href="{{ url_for('graphs') }}" class="active">Graphs</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="btn-container">
+      <button class="chart-btn" data-chart="bar">Bar Chart</button>
+      <button class="chart-btn" data-chart="pie">Pie Chart</button>
+      <button class="chart-btn" data-chart="donut">Donut Chart</button>
+      <button class="chart-btn" data-chart="line">Line Chart</button>
+      <button class="chart-btn" data-chart="scatter">Scatterplot</button>
+      <button class="chart-btn" data-chart="heatmap">Heatmap</button>
+
+
+    </div>
+
+    <div id="chart-display">
+      <p>Select a chart above to view your expense visualization.</p>
+    </div>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.chart-btn');
+    const chartDisplay = document.getElementById('chart-display');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const chartType = button.getAttribute('data-chart');
+        const imgSrc = `/chart/${chartType}`;
+
+        chartDisplay.innerHTML = '';
+
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = chartType.charAt(0).toUpperCase() + chartType.slice(1) + ' Chart';
+
+        img.onerror = () => {
+          chartDisplay.innerHTML = '<p>Failed to load the chart. Try again later.</p>';
+        };
+
+        chartDisplay.appendChild(img);
+      });
+    });
+  </script>
+</body>
+</html>

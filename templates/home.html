@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home - Expense Tracker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<header>
+  <h1>Welcome, {{ username }}!</h1>
+  <nav>
+    <ul class="nav-bar">
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+      <li><a href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+      <li><a href="{{ url_for('graphs') }}">Generate Graphs</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section class="budget-section">
+    <h3>Set Your Budget Limit</h3>
+    <form action="{{ url_for('set_budget') }}" method="post" class="budget-form">
+      <input type="number" step="0.01" min="0" name="budget" placeholder="Enter your budget limit" required />
+      <button type="submit" class="btn btn-secondary">Set Budget</button>
+    </form>
+    {% if budget %}
+    <p>Your current budget limit: <strong>${{ budget }}</strong></p>
+    {% else %}
+    <p><em>No budget set yet.</em></p>
+    {% endif %}
+  </section>
+</main>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

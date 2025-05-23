@@ -1,0 +1,378 @@
+/* Reset & basics */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f2f7fa;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Header & Navigation */
+header {
+  background: #000000;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+nav ul.nav-bar {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav ul.nav-bar li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+nav ul.nav-bar li a:hover {
+  background-color: #333333;
+}
+
+/* General container layout */
+.centered-container {
+  max-width: 800px;  /* Slightly increased width */
+  width: 75%;
+  margin: 50px auto;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+}
+
+/* Form styles */
+.form-box label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-box input,
+.form-box select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-box input:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+/* Buttons */
+.btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #800080;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #660066;
+}
+
+.btn-secondary {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #1e7e34;
+}
+
+
+.filter-form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.filter-fields input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color:  #800080;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color:  #800080;
+}
+
+.btn-clear {
+  background-color: 	#b0b0b0;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 36px; /* centers text vertically */
+  height: 36px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.btn-clear:hover {
+  background-color: 	#b0b0b0;
+}
+
+
+
+/* Flash messages */
+.flash-messages {
+  margin-bottom: 15px;
+}
+
+.flash {
+  padding: 10px 15px;
+  margin-bottom: 6px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.flash.danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.flash.info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+/* Budget section */
+.budget-section {
+  max-width: 600px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.budget-form input {
+  width: 70%;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Summary panels */
+.summary,
+.category-summary {
+  max-width: 700px;
+  margin: 25px auto;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+.summary h2,
+.category-summary h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.summary p,
+.category-summary ul {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.category-summary ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.category-summary ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.category-summary ul li:last-child {
+  border-bottom: none;
+}
+
+/* Dashboard expenses list */
+.expense-list {
+  list-style: none;
+  padding-left: 0;
+  max-width: 700px;
+  margin: 25px auto;
+}
+
+.expense-list li {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  background-color: #f8f8f8;
+  border-left: 5px solid #4CAF50;
+  border-radius: 8px;
+  font-size: 16px;
+  gap: 15px;
+}
+
+.expense-info {
+  display: flex;
+  flex: 1;
+  gap: 15px;
+  align-items: center;
+}
+
+.expense-date {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.expense-category {
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.expense-amount {
+  color: #000; /* Changed from #007bff (blue) to black */
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* Edit icon button */
+.btn-edit {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #000; /* Changed from blue to black */
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-edit:hover {
+  color: #444; /* Slightly darker shade on hover */
+}
+
+/* Delete button */
+.btn-delete {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #dc3545; /* Bootstrap danger red */
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  color: #a71d2a;
+}
+
+/* Dashboard box */
+.dashboard-box {
+  background-color: #ffffff;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Budget alert styles */
+.budget-alert {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-align: center;
+  user-select: none;
+}
+
+.budget-exceeded {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+}
+
+.budget-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 2px solid #ffeeba;
+}
+
+.budget-positive {
+  color: #28a745;
+}
+
+.budget-negative {
+  color: #dc3545;
+}
+
+.status.success {
+  color: #28a745;
+  font-weight: 600;
+  margin-top: 15px;
+  text-align: center;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - Expense Tracker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div class="centered-container">
+  <h2>Login to Expense Tracker</h2>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash {{category}}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  <form action="{{ url_for('login') }}" method="post" class="form-box">
+    <label>Username</label>
+    <input type="text" name="username" required placeholder="Enter username" autocomplete="off"/>
+    <label>Password</label>
+    <input type="password" name="password" required placeholder="Enter password" />
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+  <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ 'Edit Expense' if expense else 'Add Expense' }} - Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<header>
+  <h1>{{ 'Edit Expense' if expense else 'Add Expense' }}</h1>
+  <nav>
+    <ul class="nav-bar">
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+      <li><a href="{{ url_for('edit_profile') }}">Edit Profile</a></li>
+      <li><a href="{{ url_for('graphs') }}">Generate Graphs</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="centered-container">
+  <h2>{{ 'Update Expense Details' if expense else 'Enter Expense Details' }}</h2>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('edit_expense', index=index) if expense else url_for('add_expense') }}" method="post" class="form-box">
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" value="{{ expense.date if expense else '' }}" required />
+
+    <label for="amount">Amount</label>
+    <input type="number" id="amount" name="amount" step="0.01" min="0" value="{{ expense.amount if expense else '' }}" required />
+
+    <label for="currency">Currency</label>
+    <select name="currency" required>
+      {% set selected_currency = expense.currency if expense else 'USD' %}
+      {% for code in ['USD', 'EUR', 'INR', 'GBP', 'JPY'] %}
+        <option value="{{ code }}" {% if selected_currency == code %}selected{% endif %}>{{ code }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="category">Category</label>
+    <input type="text" id="category" name="category" placeholder="e.g. Food, Rent, Travel" value="{{ expense.category if expense else '' }}" required autocomplete="off" />
+
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" placeholder="Enter details" value="{{ expense.description if expense else '' }}" required autocomplete="off" />
+
+    <button type="submit" class="btn btn-primary">{{ 'Update Expense' if expense else 'Add Expense' }}</button>
+  </form>
+</main>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
