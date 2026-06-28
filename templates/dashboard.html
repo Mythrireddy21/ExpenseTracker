@@ -93,7 +93,21 @@
           <div class="expense-info">
             <span class="expense-date"><strong>{{ e.date }}</strong></span> |
             <span class="expense-category"><strong>{{ e.category }}</strong></span> |
-            <span class="expense-amount">${{ e.amount }}</span>
+            <span class="expense-amount"><span class="expense-amount">
+    {% if e.currency == "USD" %}
+        ${{ e.amount }}
+    {% elif e.currency == "INR" %}
+        ₹{{ e.amount }}
+    {% elif e.currency == "EUR" %}
+        €{{ e.amount }}
+    {% elif e.currency == "GBP" %}
+        £{{ e.amount }}
+    {% elif e.currency == "JPY" %}
+        ¥{{ e.amount }}
+    {% else %}
+        {{ e.amount }} {{ e.currency }}
+    {% endif %}
+</span></span>
           </div>
           <div class="expense-actions">
             <a href="{{ url_for('edit_expense', index=loop.index0) }}" class="btn-edit" title="Edit">🖉</a>
