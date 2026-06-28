@@ -1,0 +1,4 @@
+id,username,date,amount,currency,category,description
+1,Mythri,2026-02-22,500.00,INR,food,rice
+2,Mythri,2026-03-20,500.00,INR,travel,park
+3,Mythri,2026-02-01,2000.00,INR,food,food
